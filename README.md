@@ -3,6 +3,6 @@
 
  <p>É possível:<br />
     - gerar listas de clientes com dados aleatórios<br />
-    - apresentar em tela os dodos gerados<br />
+    - apresentar em tela os dados gerados<br />
     - remover a conta com o menor saldo<br />
     - obter uma saída formatada desses dados</p>
