@@ -1,8 +1,8 @@
 # bank_account
  <p>exercício proposto, aula de Estrutura de Dados</p>
 
- É possível:<br />
- <p>   - gerar listas de clientes com dados aleatórios
-    - apresentar em tela os dodos gerados
-    - remover a conta com o menor saldo
+ <p>É possível:<br />
+    - gerar listas de clientes com dados aleatórios<br />
+    - apresentar em tela os dodos gerados<br />
+    - remover a conta com o menor saldo<br />
     - obter uma saída formatada desses dados</p>
