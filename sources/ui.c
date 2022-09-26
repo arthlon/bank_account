@@ -78,8 +78,10 @@ void mainScreen(MenuItems *items) {
 		"  |     |      \\____________________________/      |     |  \n"
 		"  |     |                                          |     |  \n"
 		"  |_____|__________________________________________|_____|  ",
-		items->item1, items->item5, items->item2, items->item6,
-		items->item3, items->item9, items->item4, items->itemS
+		items->item1, items->item5,
+		items->item2, items->item6,
+		items->item3, items->item9,
+		items->item4, items->itemS
 	);
 		
 	printf("\n\n Informe o indice desejado: ");
@@ -90,11 +92,52 @@ void infoScreen(MenuItems *items, Client *loggedInCLient) {
 	system("MODE con cols=60 lines=40");
 	centerWindow();
 	
-	//char cCreatedIn[6][2] = {"", ""};
+	char cCreatedInData[24] = "";
+	char balance[18] = "R$ ";
+	char creditLimit[18] = "R$ ";
+	char buffer[sizeof(int) * 8 + 1];
+	int temp = 0;
 	struct tm *createdIn = localtime(&loggedInCLient->createdIn);
-	//itoa(loggedInCLient->createdIn, cCreatedIn[0], 10);
 	
-	//strcat(cCreatedIn, createdIn->tm_mday);
+	if(createdIn->tm_mday < 10) strcat(cCreatedInData, "0");
+	itoa(createdIn->tm_mday, buffer, 10);
+	strcat(cCreatedInData, buffer);
+	strcat(cCreatedInData, "/");
+	if(createdIn->tm_mon < 10) strcat(cCreatedInData, "0");
+	itoa(createdIn->tm_mon + 1, buffer, 10);
+	strcat(cCreatedInData, buffer);
+	strcat(cCreatedInData, "/");
+	if(createdIn->tm_year < 10) strcat(cCreatedInData, "0");
+	itoa(createdIn->tm_year + 1900, buffer, 10);
+	strcat(cCreatedInData, buffer);
+	
+	strcat(cCreatedInData, " as ");
+	
+	if(createdIn->tm_hour < 10) strcat(cCreatedInData, "0");
+	itoa(createdIn->tm_hour, buffer, 10);
+	strcat(cCreatedInData, buffer);
+	strcat(cCreatedInData, ":");
+	if(createdIn->tm_min < 10) strcat(cCreatedInData, "0");
+	itoa(createdIn->tm_min, buffer, 10);
+	strcat(cCreatedInData, buffer);
+	strcat(cCreatedInData, ":");
+	if(createdIn->tm_sec < 10) strcat(cCreatedInData, "0");
+	itoa(createdIn->tm_sec, buffer, 10);
+	strcat(cCreatedInData, buffer);
+	
+	itoa(loggedInCLient->accountData.balance, buffer, 10);
+	strcat(balance, buffer);
+	temp = fmod(loggedInCLient->accountData.balance, 1) * 100;
+	strcat(balance, ".");
+	itoa(temp, buffer, 10);
+	strcat(balance, buffer);
+	
+	itoa(loggedInCLient->accountData.creditLimit, buffer, 10);
+	strcat(creditLimit, buffer);
+	temp = fmod(loggedInCLient->accountData.creditLimit, 1.0) * 100;
+	strcat(creditLimit, ".");
+	itoa(temp, buffer, 10);
+	strcat(creditLimit, buffer);
 	
 	printf(
 		"   ______________________________________________________   \n"
@@ -102,13 +145,13 @@ void infoScreen(MenuItems *items, Client *loggedInCLient) {
 		"  |              SELECIONE A OPCAO DESEJADA              |  \n"
 		"  |         ____________________________________         |  \n"
 		"  |  ____  |                                    |  ____  |  \n"
-		"  | |  1 | | %-10s   %d/%d/%d as %d:%d:%d | | 5  | |  \n"
+		"  | |  1 | | %-12s%21s | | 5  | |  \n"
 		"  | |____| |                                    | |____| |  \n"
 		"  |  ____  |                                    |  ____  |  \n"
-		"  | |  2 | | %-17s%17.2f | | 6  | |  \n"
+		"  | |  2 | | %-17s%17s | | 6  | |  \n"
 		"  | |____| |                                    | |____| |  \n"
 		"  |  ____  |                                    |  ____  |  \n"
-		"  | |  3 | | %-17s%17.2f | | 9  | |  \n"
+		"  | |  3 | | %-17s%17s | | 9  | |  \n"
 		"  | |____| |                                    | |____| |  \n"
 		"  |  ____  |                                    |  ____  |  \n"
 		"  | |  4 | | %-17s%17s | | S  | |  \n"
@@ -134,10 +177,9 @@ void infoScreen(MenuItems *items, Client *loggedInCLient) {
 		"  |     |      \\____________________________/      |     |  \n"
 		"  |     |                                          |     |  \n"
 		"  |_____|__________________________________________|_____|  ",
-		items->item1, createdIn->tm_mday, createdIn->tm_mon + 1, createdIn->tm_year + 1900,
-					  createdIn->tm_hour, createdIn->tm_min, createdIn->tm_sec,
-		items->item2, loggedInCLient->accountData.balance, 
-		items->item3, loggedInCLient->accountData.creditLimit,
+		items->item1, cCreatedInData,
+		items->item2, balance, 
+		items->item3, creditLimit,
 		items->item4, items->itemS
 	);
 		
